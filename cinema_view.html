@@ -21,10 +21,11 @@
     <link rel='stylesheet' href='cinema/view/2.0/css/common.css'>
     <script src='cinema/lib/d3.v4.min.js'></script>
     <link rel="stylesheet" href="cinema/view/2.0/css/select-css.css">
-    <link rel="stylesheet" href="cinema/view/2.1/css/range-css.css">
-</head0
+    <link rel="stylesheet" href="cinema/view/2.0/css/range-css.css">
+</head>
 
 <body>
+    <script src="cinema/databases.js"></script>
 <div class="container">
 <header>
     <h1>Cinema:View</h1>
@@ -60,10 +61,11 @@
    		<script>
             var emptyImage   = 'cinema/view/2.0/images/empty.png';
 			var databaseList = 'cinema/view/2.0/databases.json';
+            var databaseListType = 'json'
+            var AssetName = "FILE"
 
             var url = window.location.href;
             var urlArgs = url.split('?');
-
 
             if (urlArgs.length > 1) {
                 var urlArgPairs = urlArgs[1].split('&');
@@ -78,11 +80,13 @@
                     // are set by url attributes 
                     if (kvpair[0] == 'databases') {
                         databaseList = kvpair[1];
+                    } else if (kvpair[0] == 'assetname') {
+                        AssetName = kvpair[1];
                     }
                 }
             }
 
-   			function loadJSON(callback) 
+   			function loadData(callback) 
    			{
 			  	var xobj = new XMLHttpRequest();
 			  	xobj.overrideMimeType("application/json");
@@ -114,30 +118,53 @@
 
 
 			// Initialize Dropdown list from JSON
-			var actual_JSON;
-			loadJSON(function(response) 
-			{
-			    // Parse JSON string into object
-			    actual_JSON = JSON.parse(response);
+            var actual_JSON;
 
-			    var dbs = [];
-			    for (i = 0; i < actual_JSON.length; i++) 
-			    {
-				  	dbs.push( actual_JSON[i].database_name );
-				}
+            databaseListType = db_get_database_list_type( databaseList )
+            if (databaseListType == "json") {
+                loadData(function(response) 
+                {
+                    // Parse JSON string into object
+                    actual_JSON = JSON.parse(response);
 
-				var sel = document.getElementById('dbList');
-				for(var i=0; i <actual_JSON.length; i++) {
-				    var opt = document.createElement('option');
-				    opt.innerHTML = dbs[i];
-				    opt.value = i;
-				    sel.appendChild(opt);
-				}
+                    var dbs = [];
+                    for (i = 0; i < actual_JSON.length; i++) 
+                    {
+                        dbs.push( actual_JSON[i].database_name );
+                    }
 
-				// Fill in DB
-				optionSelected();
-			});
+                    var sel = document.getElementById('dbList');
+                    for(var i=0; i <actual_JSON.length; i++) {
+                        var opt = document.createElement('option');
+                        opt.innerHTML = dbs[i];
+                        opt.value = i;
+                        sel.appendChild(opt);
+                    }
 
+                    // Fill in DB
+                    optionSelected();
+                });
+            } else {
+                // convert a database into a json data structure
+                actual_JSON = db_create_view_database_list( databaseList );
+
+                var dbs = [];
+                for (i = 0; i < actual_JSON.length; i++) 
+                {
+                    dbs.push( actual_JSON[i].database_name );
+                }
+
+                var sel = document.getElementById('dbList');
+                for(var i=0; i <actual_JSON.length; i++) {
+                    var opt = document.createElement('option');
+                    opt.innerHTML = dbs[i];
+                    opt.value = i;
+                    sel.appendChild(opt);
+                }
+
+                // Fill in DB
+                optionSelected();
+            }
 
 
 			function optionSelected()
@@ -231,7 +258,7 @@
 					dataResults.forEach(function(result, index) {
    						var imgSrcKey = getLookupKey(result.keys, query);
    						if (imgSrcKey in result.lookup) {
-	   						var imgSrc = dataSets[index] + "/" +result.lookup[imgSrcKey]["FILE"];
+	   						var imgSrc = dataSets[index] + "/" +result.lookup[imgSrcKey][AssetName];
 		   					images[index].img.attr("src", imgSrc);
    						}
    						else {
@@ -321,7 +348,7 @@
 						images.push({img: img});
 
 			   			if (imgSrcKey in result.lookup) {
-				   			var imgSrc = dataSets[index] + "/" + result.lookup[imgSrcKey]["FILE"];
+				   			var imgSrc = dataSets[index] + "/" + result.lookup[imgSrcKey][AssetName];
 					   		images[index].img.attr("src", imgSrc);
 			   			}
 			   			else {
