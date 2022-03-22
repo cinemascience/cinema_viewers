@@ -53,19 +53,27 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	<meta name='author' content="David Rogers">
 	<meta name='author' content="Robin Maack">
 
-    <!-- external -->
+    <!-- d3 -->
+    <!-- remote URL, for minimum installation -->
 	<script src="https://d3js.org/d3.v5.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/vtk.js"></script>
 
+    <!-- local URL, if no external access is allowed -->
+    <!--
+	<script src="cinema/lib/d3.v5.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vtk.js"></script>
+    -->
+
     <!-- components -->
+    <!-- remote URL, for minimum installation -->
 	<link rel='stylesheet' href='https://cinemascience.github.io/release/CinemaComponents.v2.7.1.min.css'>
 	<script src='https://cinemascience.github.io/release/CinemaComponents.v2.7.1.min.js'></script>
 
-	<!-- alternative local components files (for testing builds) (please comment this out before commiting)-->
-	<!--
-	<link rel='stylesheet' href='test/CinemaComponents.min.css'>
-	<script src='test/CinemaComponents.js'></script>
-	-->
+    <!-- local URL, if no external access is allowed -->
+    <!--
+	<link rel='stylesheet' href='cinema/lib/CinemaComponents.v2.7.1.min.css'>
+	<script src='cinema/lib/CinemaComponents.v2.7.1.min.js'></script>
+    -->
 
 	<!--Import Viewer's CSS-->
 	<link rel='stylesheet' href='cinema/explorer/2.0/css/viewer.css'>

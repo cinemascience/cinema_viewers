@@ -21,11 +21,11 @@ To use Cinema:View, you **MUST** allow local file access. Do this in the followi
 
 To use the viewer, select the database you want to see from the dropdown "Select a database". sphere test should look like:
 
-<img src="../cinema/testImages/sphere.png" width="500" border="1"/>
+<img src="../doc/img/sphere.png" width="500" border="1"/>
 
 while sedov test should look like:
 
-<img src="../cinema/testImages/sedov.png" width="500" border="1"/>
+<img src="../doc/img/sedov.png" width="500" border="1"/>
 
 
 ## Adding a database to the viewer
