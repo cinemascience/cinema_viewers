@@ -15,16 +15,16 @@
             flex-wrap: wrap;
         }
     </style>
-    <meta app="Cinema:View" version="2.0">
+    <meta app="Cinema:View" version="2.1">
     <meta charset="utf-8">
-    <link rel='stylesheet' href='cinema/view/2.0/css/view.css'>
-    <link rel='stylesheet' href='cinema/view/2.0/css/common.css'>
+    <link rel='stylesheet' href='cinema/view/2.1/css/view.css'>
+    <link rel='stylesheet' href='cinema/view/2.1/css/common.css'>
     <!--
     <script src='cinema/lib/d3.v4.min.js'></script>
     -->
-	<script src="https://d3js.org/d3.v5.min.js"></script>
-    <link rel="stylesheet" href="cinema/view/2.0/css/select-css.css">
-    <link rel="stylesheet" href="cinema/view/2.0/css/range-css.css">
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+    <link rel="stylesheet" href="cinema/view/2.1/css/select-css.css">
+    <link rel="stylesheet" href="cinema/view/2.1/css/range-css.css">
 </head>
 
 <body>
@@ -62,12 +62,12 @@
 
 </div>
         <script>
-            var emptyImage   = 'cinema/view/2.0/images/empty.png';
-            var databaseList = 'cinema/view/2.0/databases.json';
+            var emptyImage   = 'cinema/view/2.1/images/empty.png';
+            var databaseList = 'cinema/view/2.1/databases.json';
             var databaseListType = 'json'
             var AssetName = "FILE"
 
-            // first, check for attributes from the server
+            // first, check for an overwrite to the AssetName 
             loadAttributes(function(response) 
             {
                 jsondata = JSON.parse(response);
@@ -102,11 +102,11 @@
             }
             // end override attributes
 
-            function loadAttributes(callback) 
+            function loadAttributes(callback)
             {
                 var xobj = new XMLHttpRequest();
                 xobj.overrideMimeType("application/json");
-                xobj.open('GET', "cinema/view/cinema_attributes.json", true); // Replace 'my_data' with the path to your file
+                xobj.open('GET', "cinema/view/2.1/cinema_attributes.json", true); // Replace 'my_data' with the path to your file
                 xobj.onreadystatechange = function () {
                     if (xobj.readyState == 4 && (xobj.status == 0 || xobj.status == 200)) {
                         // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
