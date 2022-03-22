@@ -28,7 +28,6 @@
 </head>
 
 <body>
-    <script src="cinema/lib/databases.js"></script>
 <div class="container">
 <header>
     <h1>Cinema:View</h1>
@@ -61,6 +60,8 @@
 <footer>&nbsp</footer>
 
 </div>
+
+    <script src="cinema/lib/databases.js"></script>
         <script>
             var emptyImage   = 'cinema/view/2.1/images/empty.png';
             var databaseList = 'cinema/view/2.1/databases.json';
@@ -70,9 +71,11 @@
             // first, check for an overwrite to the AssetName 
             loadAttributes(function(response) 
             {
-                jsondata = JSON.parse(response);
-                if ("assetname" in jsondata) {
-                    AssetName = jsondata.assetname
+                if (response != "") {
+                    jsondata = JSON.parse(response);
+                    if ("assetname" in jsondata) {
+                        AssetName = jsondata.assetname
+                    }
                 }
                 // note that others could be passed from the server
                 // at present, they aren't, to simplify testing
