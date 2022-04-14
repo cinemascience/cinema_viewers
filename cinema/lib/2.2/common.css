@@ -14,12 +14,20 @@ body {
 header, footer {
     padding-left:   1px;
     padding-right:  1px;
-    padding-top:    10px;
-    padding-bottom: 10px;
     color: white;
     background-color: #373737;
     clear: left;
     text-align: center;
+}
+
+header {
+    padding-top:    1px;
+    padding-bottom: 1px;
+}
+
+footer {
+    padding-top:    10px;
+    padding-bottom: 10px;
 }
 
 #header h2 {
@@ -27,3 +35,29 @@ header, footer {
 	margin: initial;
 }
 
+#resultsArea {
+	float: left;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	padding: 10px;
+	background-color: white;
+}
+
+.imageArea {
+	float: left;
+	position: relative;
+	width: 75%;
+}
+
+.sliderArea {
+	float: left;
+	position: relative;
+	width: 20%;
+}
+
+.cinemaImage {
+	float: left;
+	position: relative;
+	padding: 2px;
+}
