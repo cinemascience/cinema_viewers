@@ -1,4 +1,4 @@
-var emptyImage   = 'cinema/view/2.2/images/empty.png';
+var emptyImage   = 'cinema/lib/2.2/img/empty.png';
 var databaseList = 'cinema/view/2.2/databases.json';
 var databaseListType = 'json'
 var AssetName = "FILE"

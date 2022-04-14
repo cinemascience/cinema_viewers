@@ -14,20 +14,12 @@ body {
 header, footer {
     padding-left:   1px;
     padding-right:  1px;
+    padding-top:    2px;
+    padding-bottom: 2px;
     color: white;
     background-color: #373737;
     clear: left;
     text-align: center;
-}
-
-header {
-    padding-top:    1px;
-    padding-bottom: 1px;
-}
-
-footer {
-    padding-top:    10px;
-    padding-bottom: 10px;
 }
 
 #header h2 {
