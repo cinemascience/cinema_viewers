@@ -51,6 +51,11 @@ footer {
 }
 
 .sliderArea {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1em;
+    font-family: "Geneva";
+    font-align: left;
 	float: left;
 	position: relative;
 	width: 20%;
@@ -60,4 +65,9 @@ footer {
 	float: left;
 	position: relative;
 	padding: 2px;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
 }

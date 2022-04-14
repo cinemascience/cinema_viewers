@@ -186,7 +186,6 @@ function optionSelected()
     dataSets.forEach(function(item, index) {
         q.defer(d3.csv, item + "/data.csv");
     });
-
     q.awaitAll(function(error, results) {
         var values = {};
         results.forEach(function(item, index) {
@@ -222,7 +221,7 @@ function optionSelected()
 
     function updateResults() 
     {
-        // Called when sliders are moced
+        // Called when sliders are moved
         dataResults.forEach(function(result, index) {
             var imgSrcKey = getLookupKey(result.keys, query);
             if (imgSrcKey in result.lookup) {

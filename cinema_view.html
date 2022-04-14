@@ -2,19 +2,6 @@
 <html>
 
 <head>
-    <style>
-        p.slider_area {
-            font-style: normal;
-            font-weight: normal;
-            font-size: 1em;
-            font-family: "Geneva";
-        }
-
-        .flex-container {
-            display: flex;
-            flex-wrap: wrap;
-        }
-    </style>
     <meta app="Cinema:View" version="2.2">
     <meta charset="utf-8">
     <link rel='stylesheet' href='cinema/lib/2.2/common.css'>
@@ -25,10 +12,10 @@
     <!--
     <script src='cinema/lib/d3.v4.min.js'></script>
     -->
-    <!-- End:   Cinema Local File Install --->
-    <!-- Begin: Cinema External Access Install --->
+    <!-- End:   Cinema Local File Install -->
+    <!-- Begin: Cinema External Access Install -->
 	<script src="https://d3js.org/d3.v4.min.js"></script>
-    <!-- End:   Cinema External Access Install --->
+    <!-- End:   Cinema External Access Install -->
 </head>
 
 <body>
@@ -38,27 +25,21 @@
 </header>
 
 <div id="resultsArea">
-    
     <div class="imageArea flex-container" id="imageArea"></div>
-    
     <div class="sliderArea">
         <div id="delectDB">
-            <p class="slider_area"> Select Dataset:
+            <p> Select Dataset:
                 <select id="dbList" class="select-css" onchange="optionSelected();">
                 </select>
             </p>
         </div>
         <div id="imgSize">
-            <p class="slider_area">
-                <div>Image Size:</div>
+                <p>Image Size:</p>
                 <input type="range" min="1" max="100" id="imageSize" class="slidecontainer" step="1">
-            </p>
         </div>
-        <p class="slider_area">
-            <div id="sliderContainer" class="sliderContainer"> </div>
-        </p>
+        <div id="sliderContainer" class="sliderContainer">
+        </div>
     </div>
-    
 </div>
 
 <footer>&nbsp</footer>
