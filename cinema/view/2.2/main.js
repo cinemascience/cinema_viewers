@@ -295,6 +295,7 @@ function optionSelected()
                     .attr("id", "image_div_" + index.toString())
                     .style("width","" + imageSizeSlider.node().value + "%")
                     .style("text-align","center")
+                    .style("margin","5px")
                     .text(datasetNamestoLoad[index])
 
                 .append("img")
