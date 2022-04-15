@@ -19,7 +19,7 @@
 <body>
 <div class="container">
 <header>
-    <h3>Cinema:Simple</h3>
+    Cinema:Simple
 </header>
 
 <div id="resultsArea">
@@ -57,6 +57,7 @@ var q = d3.queue();
 dataSets.forEach(function(item, index) {
     q.defer(d3.csv, item + "/data.csv");
 });
+
 q.awaitAll(function(error, results) {
     var values = {};
     results.forEach(function(item, index) {
@@ -105,7 +106,8 @@ function updateResults()
     });
 }
 
-function doneLoading(results, values) {
+function doneLoading(results, values) 
+{
     var imageSizeSlider = d3.select("#imageSize")
         .property("value", (100/dataSets.length)-1)
         .on("input", function() {

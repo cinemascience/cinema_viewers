@@ -9,22 +9,28 @@ div.container {
 
 body {
     background-color: #f9f9f9;
+    margin: 0;
 }
 
 header, footer {
+    font-weight: bold;
     padding-left:   1px;
     padding-right:  1px;
-    padding-top:    2px;
-    padding-bottom: 2px;
+    padding-top:    10px;
+    padding-bottom: 10px;
     color: white;
     background-color: #373737;
     clear: left;
     text-align: center;
 }
 
+footer {
+    padding-top:    2px;
+    padding-bottom: 2px;
+}
+
 #header h2 {
 	display: inline-block;
-	margin: initial;
 }
 
 #resultsArea {
