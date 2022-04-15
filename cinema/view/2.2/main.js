@@ -1,4 +1,4 @@
-var emptyImage   = 'cinema/view/2.2/images/empty.png';
+var emptyImage   = 'cinema/lib/2.2/img/empty.png';
 var databaseList = 'cinema/view/2.2/databases.json';
 var databaseListType = 'json'
 var AssetName = "FILE"
@@ -186,7 +186,6 @@ function optionSelected()
     dataSets.forEach(function(item, index) {
         q.defer(d3.csv, item + "/data.csv");
     });
-
     q.awaitAll(function(error, results) {
         var values = {};
         results.forEach(function(item, index) {
@@ -222,7 +221,7 @@ function optionSelected()
 
     function updateResults() 
     {
-        // Called when sliders are moced
+        // Called when sliders are moved
         dataResults.forEach(function(result, index) {
             var imgSrcKey = getLookupKey(result.keys, query);
             if (imgSrcKey in result.lookup) {
@@ -296,6 +295,7 @@ function optionSelected()
                     .attr("id", "image_div_" + index.toString())
                     .style("width","" + imageSizeSlider.node().value + "%")
                     .style("text-align","center")
+                    .style("margin","5px")
                     .text(datasetNamestoLoad[index])
 
                 .append("img")
