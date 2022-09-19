@@ -600,7 +600,7 @@ function handleMouseover(index, event) {
 			view.setHighlightedPoints([index]);
 			lastIx = index;
 		}
-	} else if (currentView == viewType.IMAGESPREAD &&
+		else if (currentView == viewType.IMAGESPREAD &&
 				(event.srcElement instanceof SVGElement // true if from PCoord.SVG
 					| event.currentTarget.getAttribute('class') == 'pathContainer' // true if from PCoord.Canvas
 			    )){
@@ -618,16 +618,17 @@ function handleMouseover(index, event) {
 			e.style.transition = 'none';
 			e.style.backgroundColor = 'rgb(245,243,98)';
 			lastIx = index;
-		} else if (!lock) {
-			pcoord.setHighlightedPaths([]);
-			if (currentView == viewType.SCATTERPLOT)
-				view.setHighlightedPoints([]);
-			else if (currentView == viewType.IMAGESPREAD && lastIx >= 0) {
-				var e = document.querySelector('.dataDisplay[index="' + String(lastIx) +'"]')
-				if (e != null) {
-					e.style.transition = 'background-color 1s ease';
-					e.style.backgroundColor = 'lightgray';
-					lastIx = -1;
+		}
+	} else if (!lock) {
+		pcoord.setHighlightedPaths([]);
+		if (currentView == viewType.SCATTERPLOT)
+			view.setHighlightedPoints([]);
+		else if (currentView == viewType.IMAGESPREAD && lastIx >= 0) {
+			var e = document.querySelector('.dataDisplay[index="' + String(lastIx) +'"]')
+			if (e != null) {
+			    e.style.transition = 'background-color 1s ease';
+			    e.style.backgroundColor = 'lightgray';
+			    lastIx = -1;
 			}
 		}
 	}
