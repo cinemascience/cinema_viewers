@@ -53,6 +53,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	<meta name='author' content="James Ahrens">
 	<meta name='author' content="David Rogers">
 	<meta name='author' content="Robin Maack">
+	<meta name='author' content="Michael Tynes">
 
     <!-- Begin: Cinema Local File Install -->
     <!-- d3 -->
@@ -72,10 +73,12 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <!-- d3 -->
 	<script src="https://d3js.org/d3.v5.min.js"></script>
     <!-- components -->
-	<link rel='stylesheet' href='https://cinemascience.github.io/release/CinemaComponents.v2.7.1.min.css'>
-	<script src='https://cinemascience.github.io/release/CinemaComponents.v2.7.1.min.js'></script>
+	<link rel='stylesheet' href='https://cinemascience.github.io/release/CinemaComponents.v2.8.0.min.css'>
+	<script src='https://cinemascience.github.io/release/CinemaComponents.v2.8.0.min.js'></script>
     <!-- vtk -->
     <script type="text/javascript" src="https://unpkg.com/vtk.js"></script>
+	<!-- 3dmoljs -->
+	<script src="https://3Dmol.org/build/3Dmol-min.js" async></script>
     <!-- End:   Cinema External Access Install -->
 
 	<!-- Import Viewer's CSS -->
@@ -108,6 +111,8 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<div id="pcoordContainer"></div>
 			<!--readout for the number of results currently selected-->
 			<div id="selectionStats"></div>
+			<!--button to unlock mouseover behavior-->
+			<button id="unlockButton" onclick="unlock()">Unlock</button>
 			<!--Checkbox for toggling smooth lines on the chart-->
 			<div id="smoothLinesWrapper">
 				<input id="smoothLines" type="checkbox" checked="checked" oninput="updateSmoothLines()">Smooth Lines</input>

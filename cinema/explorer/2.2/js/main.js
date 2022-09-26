@@ -41,6 +41,10 @@ var hasAxisOrdering = false;
     //this can be overriden with HTTP params
 var databaseList = 'cinema/explorer/2.2/databases.json'; 
 var databaseListType = 'json';
+	//Track last highlighted datapoint (-1 -> none)
+var lastIx = -1;
+	//locks selection in PCoords
+var lock = false;
 
 var loaded = false;
 
@@ -184,6 +188,8 @@ function load_databases() {
 function load() {
 	loaded = false;
 	savedDimensions = {};
+	//Reset last hilighted datapoint
+	lastIx = -1;
 
 	//Remove old components
 	if (window.pcoord) {pcoord.destroy();}
@@ -283,10 +289,13 @@ function doneLoading() {
 			view.setSelection(selection);
 	});
 
-	//Set mouseover handler for pcoord and views component
+	//Set mouseover and click handlers for pcoord and views component
 	pcoord.dispatch.on("mouseover",handleMouseover);
-	if (currentView != viewType.LINECHART)
-		view.dispatch.on('mouseover',handleMouseover);
+	pcoord.dispatch.on("click",handleClick);
+	if (currentView != viewType.LINECHART) {
+		pcoord.dispatch.on("click", handleClick);
+		view.dispatch.on('mouseover', handleMouseover);
+	}
 
 	//If the view is a Scatter Plot, set listeners to save dimensions when they are changed
 	if (currentView == viewType.SCATTERPLOT) {
@@ -448,6 +457,8 @@ function changeView(type) {
 				node.value = savedDimensions.y;
 				d3.select(node).on('input').call(node);//trigger input event on select
 			}
+			// highlight data element from scatterplot
+			view.setHighlightedPoints(pcoord.highlighted);
 		}
 		else if (currentView == viewType.LINECHART) {
 			d3.select('#scatterPlotTab').attr('selected','default');
@@ -474,9 +485,11 @@ function changeView(type) {
 			}
 		}
 
-		//Set mouseover handler for new view and update size
-		if (currentView != viewType.LINECHART)
-			view.dispatch.on('mouseover',handleMouseover);
+		//Set mouseover and click handlers for new view and update size
+		if (currentView != viewType.LINECHART) {
+			view.dispatch.on('mouseover', handleMouseover);
+			view.dispatch.on('click', handleClick);
+		}
 
 		updateViewContainerSize();
 		view.updateSize();
@@ -484,6 +497,18 @@ function changeView(type) {
 		//Set view's initial selection to the current pcoord selection
 		if (currentView != viewType.LINECHART)
 			view.setSelection(pcoord.selection.slice());
+
+		// display moused-over path's data in imagespread
+		if (currentView == viewType.IMAGESPREAD) {
+		    index = pcoord.highlighted[0];
+			view.goToPageWithIx(index);
+			var e = document.querySelector('.dataDisplay[index="' + String(index) +'"]')
+			if (e != null) {
+			    e.scrollIntoView()
+			    e.style.transition = 'none';
+			    e.style.backgroundColor = 'rgb(245,243,98)';
+			}
+		}
 	}
 }
 
@@ -567,17 +592,78 @@ function updateViewContainerSize() {
 //and update info pane
 //Also sets highlight in view if its a Scatter Plot
 function handleMouseover(index, event) {
-	if (index != null) {
+	if (index != null && !lock) {
 		pcoord.setHighlightedPaths([index]);
-		if (currentView == viewType.SCATTERPLOT)
+		if (currentView == viewType.SCATTERPLOT) {
 			view.setHighlightedPoints([index]);
-	}
-	else {
+			lastIx = index;
+		}
+		else if (currentView == viewType.IMAGESPREAD &&
+				(event.srcElement instanceof SVGElement // true if from PCoord.SVG
+					| event.currentTarget.getAttribute('class') == 'pathContainer' // true if from PCoord.Canvas
+			    )){
+			if (lastIx >= 0) {
+			    var e = document.querySelector('.dataDisplay[index="' + String(lastIx) +'"]')
+			    if (e != null) {
+			        e.style.transition = 'background-color 1s ease';
+			        e.style.backgroundColor = 'lightgray';
+			        lastIx = -1;
+			    }
+			}
+			view.goToPageWithIx(index);
+			var e = document.querySelector('.dataDisplay[index="' + String(index) +'"]')
+			e.scrollIntoView()
+			e.style.transition = 'none';
+			e.style.backgroundColor = 'rgb(245,243,98)';
+			lastIx = index;
+		}
+	} else if (!lock) {
 		pcoord.setHighlightedPaths([]);
 		if (currentView == viewType.SCATTERPLOT)
 			view.setHighlightedPoints([]);
+		else if (currentView == viewType.IMAGESPREAD && lastIx >= 0) {
+			var e = document.querySelector('.dataDisplay[index="' + String(lastIx) +'"]')
+			if (e != null) {
+			    e.style.transition = 'background-color 1s ease';
+			    e.style.backgroundColor = 'lightgray';
+			    lastIx = -1;
+			}
+		}
 	}
-	updateInfoPane(index,event);
+}
+
+// locks mouseover behavior over a selected path
+function handleClick(index, event) {
+    if (index != null) {
+        if (currentView == viewType.IMAGESPREAD && lock == false &&
+			!(event.fromElement instanceof SVGElement // true if from PCoord.SVG
+				| event.currentTarget.getAttribute('class') == 'pathContainer' // true if from PCoord.Canvas
+			)) {
+			var e = document.querySelector('.dataDisplay[index="' + String(index) +'"]')
+			if (event.currentTarget.getAttribute('class') !== 'detailDisplay')
+				e.scrollIntoView()
+			e.style.transition = 'none';
+			e.style.backgroundColor = 'rgb(245,243,98)';
+			lastIx = index;
+		}
+		lock = true;
+    }
+}
+
+// unlocks mouseover behavior and resets highlight
+function unlock() {
+    lock = false;
+	pcoord.setHighlightedPaths([]);
+	if (currentView == viewType.SCATTERPLOT)
+		view.setHighlightedPoints([]);
+	else if (currentView == viewType.IMAGESPREAD && lastIx >= 0) {
+		var e = document.querySelector('.dataDisplay[index="' + String(lastIx) +'"]')
+		if (e != null) {
+			e.style.transition = 'background-color 1s ease';
+			e.style.backgroundColor = 'lightgray';
+	        lastIx = -1;
+		}
+	}
 }
 
 //Finalize dragging, add selection
