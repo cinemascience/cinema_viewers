@@ -196,8 +196,6 @@ function load() {
 	if (window.view) {view.destroy();}
 	if (window.query) {query.destroy();}
 
-
-
 	//Remove axisOrdering panel if it exists
 	if (hasAxisOrdering) {
 		d3.select('#axisOrderPanel').remove();
